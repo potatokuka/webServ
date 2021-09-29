@@ -1,0 +1,110 @@
+
+     /$$      /$$           /$$        /$$$$$$
+    | $$  /$ | $$          | $$       /$$__  $$ 
+    | $$ /$$$| $$  /$$$$$$ | $$$$$$$ | $$  \__/  /$$$$$$   /$$$$$$  /$$    /$$
+    | $$/$$ $$ $$ /$$__  $$| $$__  $$|  $$$$$$  /$$__  $$ /$$__  $$|  $$  /$$/
+    | $$$$_  $$$$| $$$$$$$$| $$  \ $$ \____  $$| $$$$$$$$| $$  \__/ \  $$/$$/
+    | $$$/ \  $$$| $$_____/| $$  | $$ /$$  \ $$| $$_____/| $$        \  $$$/
+    | $$/   \  $$|  $$$$$$$| $$$$$$$/|  $$$$$$/|  $$$$$$$| $$         \  $/
+    |__/     \__/ \_______/|_______/  \______/  \_______/|__/          \_/
+
+-------------Rules:
+
+c++98
+	no external lib (boost)
+
+nginx is the model
+	HTTP 1.1
+
+headers/libraries:
+	Everything in C++ 98. htons, htonl, ntohs, ntohl,
+	select, poll, epoll (epoll_create, epoll_ctl,
+	epoll_wait), kqueue (kqueue, kevent), socket,
+	accept, listen, send, recv, bind, connect,
+	inet_addr, setsockopt, getsockname, fcntl.
+	
+	only use fcntl as follow: fcntl(fd, F_SETFL, O_NONBLOCK);
+
+macros/defines:
+	FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
+
+poll or equivalent like select, kqueue, epoll.
+	non-blocking, only 1 poll for IO client to server (listens includes).
+	poll should check read and write at the same time.
+	never a read /write operation without going through poll 
+	Checking errno is forbidden after a read /write.
+
+Weve let you use fcntl because mac os X doesnt implement write the same way as other Unix OS.
+You must use non-blocking FD to have a result similar to other OS.
+Because you are using non-blocking FD, you could use read/recv or write/send functions without 
+polling (or equivalent) and your server would be not blocking. But we dont want that.
+Again trying to read/recv or write/send in any FD without going through a poll (or equivalent) 
+will give you a mark equal to 0 and the end of the evaluation.
+
+-------------Requirements:
+
+	functionality
+
+liveness/termination	server should never block and the client should be bounce properly if necessary.
+default error pages		You server should have default error pages if none are provided.
+timeout 				A request to your server should never hang forever.
+No leaks 				Your program should not leak and should never crash, (even when out of memory if all the initialization is done)
+fork only for CGI		You canuse fork for something else than CGI (like php or python etc...)
+config file path		Your program should have a config file in argument or use a default path.
+						You dont need to use poll (or equivalent) before reading your config file.
+static site				You should be able to serve a fully static website.
+file upload				Client should be able to upload files.
+correct response codes	Your HTTP response status codes must be accurate.
+methods					You need at least GET, POST, and DELETE methods.
+stress					Stress tests your server it must stay available at all cost.
+multiple ports			Your server can listen on multiple ports (See config file).
+
+	configuration
+
+port/host		choose the port and host of each "server"
+				The first server for a host:port will be the default for this host:port 
+					(meaning it will answer to all request that doesnt belong to an other server)
+server_names	setup the server_names or not (check how nginx handles)
+error pages		setup default error pages
+body size		limit client body size
+routes			setup routes following rules/configuration (no regexp)
+	specify methods		define a list of accepted HTTP Methods for the route
+	redirect			define an HTTP redirection.
+	path subsitution	define a directory or a file from where the file should be search 
+		e.g. url /kapouet is rooted to /tmp/www, url /kapouet/pouic/toto/pouet is /tmp/www/pouic/toto/pouet
+	autoindex			turn on or off directory listing
+	atidx custom page	default file to answer if the request is a directory
+	CGI					execute CGI based on certain file extension (for example .php)
+		- Because you wont call the CGI directly use the full path as PATH_INFO
+		- For chunked request, your server needs to unchunk it and the CGI expects EOF as end of the body.
+		- If no content_length is returned from the CGI, expect EOF as the end of the returned data.
+		- Your program should call the cgi with the file requested as first argument
+		- The cgi should be run in the correct directory for relative path file access
+		- Your server should work with one CGI (php-cgi, python...)
+	file path			make the route able to accept uploaded files and configure where it should be saved
+
+	important!!
+
+server must never die
+tests in other languages? golang
+provide some configurations and default basic files 
+test/demonstrate for every feature
+
+-------------Next Steps:
+
+read about http
+read about RFC
+what is CGI?
+	https://en.wikipedia.org/wiki/Common_Gateway_Interface
+play with nginx and telnet
+what are : FD_SET, FD_CLR, FD_ISSET, FD_ZERO (macros/defines)
+what is poll?
+
+-------------WE WILL:
+Use CMake
+Make tasks
+Use branches for tasks
+	Squash and name our merges
+Write tests
+Keep things modular
+
