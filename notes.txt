@@ -1,0 +1,147 @@
+
+   /$$      /$$           /$$        /$$$$$$
+  | $$  /$ | $$          | $$       /$$__  $$ 
+  | $$ /$$$| $$  /$$$$$$ | $$$$$$$ | $$  \__/  /$$$$$$   /$$$$$$  /$$    /$$
+  | $$/$$ $$ $$ /$$__  $$| $$__  $$|  $$$$$$  /$$__  $$ /$$__  $$|  $$  /$$/
+  | $$$$_  $$$$| $$$$$$$$| $$  \ $$ \____  $$| $$$$$$$$| $$  \__/ \  $$/$$/
+  | $$$/ \  $$$| $$_____/| $$  | $$ /$$  \ $$| $$_____/| $$        \  $$$/
+  | $$/   \  $$|  $$$$$$$| $$$$$$$/|  $$$$$$/|  $$$$$$$| $$         \  $/
+  |__/     \__/ \_______/|_______/  \______/  \_______/|__/          \_/
+
+-------------RFC (Request for Comments)
+	
+Initially informal note taking format for ARPANET, named RFC to create an open
+ended discussion Now official publication channel for the Internet Engineering
+Task Force (IETF), Internet Architecture Board.
+
+HTTP/1.1 	RFC 7230, RFC 7231, RFC 7232, RFC 7233, RFC 7234, RFC 7235.
+HTTP/2 		RFC 7540 and RFC 7541
+FTP 		RFC959
+
+use get_rfc.sh [rfc_num] to download txt
+
+[rfc_num]:[line_no]
+
+https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa
+-------------OSI
+
+7 layer abstraction model to standardize communicaiton for telecommunication and
+computer systems. Physical, Data Link, Network, Transport, Session,
+Presentation, and Application. We care about layer 4, Transport.
+	
+Physical- 		Physical hardware, hubs, cabling, repeaters, network adapters.
+Data Link- 		Node-to-node transfer of data 'frames', sub layers: MAC, LLC.
+Network-		Routing of packets with IP.
+Transport-		Delivery and error checking of packets. Regulates communication:
+				size, sequencer, transfer. e.g. TCP, UDP, SPX
+Session-		Conversations: set-up, management, termination. Auth/reconnect.
+Presentation-	Translation from packets to application usable information.
+				Encryption/decryption.
+Application-	End user and application software.
+
+We will implement TCP on layer 4. UDP is not used since it is not "reliable
+transport".
+
+-------------TCP/IP Sockets
+
+Sockets allow data transfer between unrelated processes on differnet networked
+machines.
+
+-------------HTTP
+
+----!HTTP/1.1 messages
+
+2616:??
+HTTP TCP default port is 80 (other ports are available)
+
+7231:289 
+
+Messages are either requests or response.  
+
+Connection opens -> Server listens -> Server recieves request ->
+Parse/Interperet -> One or more responses
+
+Response comes in two parts, header and body (payload)
+
+e.g. Request header
+GET /index.html HTTP/1.1
+Host: localhost:8080
+Connection: keep-alive
+...
+
+e.g. Minimum response header
+HTTP/1.1 200 OK 
+Content-Type: text/plain 
+Content-Length: 12 
+
+----!request methods (9 in total)
+
+GET		feth URL, retrieve remote data from the server
+POST	insert/update remote data and recieve a response
+			/\ this is slightly outdated
+				GET is often used in form submission
+				HTTP over TLS/SSL will still encrypt parameters in URL
+				servers often store raw URLs so still dont use it
+HEAD	fetch information about a URL
+PUT		store to a URL
+DELETE	delete a URL (often just GET or POST)
+
+REST APIs:	GET, PUT, POST, DELETE
+
+----!request header fields
+
+Metadata such as accepted encoding formats, languages, document formats
+
+----!response status codes
+
+https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+1st digit	5 standard classes of responses
+
+1xx			informational response	the request was received, continuing process
+2xx			successful				the request was successfully received,
+									understood, and accepted
+3xx			redirection				further action needs to be taken in order to
+									complete the request
+4xx			client error			the request contains bad syntax or cannot be
+									fulfilled
+5xx			server error			the server failed to fulfil an apparently
+									valid request
+
+----!response header fields
+
+HTTP/1.1 200 OK 
+	This mentions what version of HTTP we are using, Status code and Status
+	message.  
+Content-Type: text/plain 
+	This says that Im (server) sending a plain text. There are many
+	Content-Types. For example, for images we use this.
+Content-Length: 12 
+	It mentions how many bytes the server is sending to the client. The
+	web-browser only reads how much we mention here.
+
+Content-types:
+	The two composite top-level media types are:
+		Multipart
+		Message
+	The five discrete top-level media types are:
+		Text
+		Image
+		Audio
+		Video
+		Application
+https://docs.microsoft.com/en-us/previous-versions/exchange-server/exchange-10/ms526508(v=exchg.10)?redirectedfrom=MSDN
+
+----!payload messages 
+
+----!metadata
+
+----!body content
+
+----!mechanisms for content negotiation
+
+-------------CGI
+
+-------------FD_SET, FD_CLR, FD_ISSET, FD_ZERO (macros/defines)
+
+-------------poll/select
+
