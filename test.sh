@@ -1,2 +1,2 @@
 #!/bin/bash
-./make.sh && ctest --output-on-failure ./
+./build.sh && ctest --output-on-failure ./

@@ -1,14 +1,14 @@
 
-CMakeCache.txt
+Testing/
 CMakeFiles/
-Makefile
-cmake_install.cmake
-webserv.run
 .cache/
+Makefile
+CMakeCache.txt
+cmake_install.cmake
 CTestTestfile.cmake
 CTestCostData.txt
 compile_commands.json
+*.run
 *.a
 *.o
 *.test
-Testing/

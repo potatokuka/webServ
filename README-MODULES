@@ -1,0 +1,16 @@
+read this to understand writing tests
+	https://google.github.io/googletest/primer.html
+
+in project_root CMakeLists.txt add:
+	`add_subdirectory(module_name)`
+
+write your .cpp and .hpp files in src/
+make corresponding .cpp test files in tst/
+
+build using build.sh from project_root
+test using test.sh from project_root
+
+write any random stuff you want in main.cpp to test quickly, but write tests for functions!
+	compile from project_root,
+	will make binary at ./$MODULE/$MODULE.run
+
