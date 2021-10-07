@@ -131,3 +131,11 @@ Use branches for tasks
 	Squash and name our merges
 Write tests
 Keep things modular
+
+-------------Breakdown:
+
+Socket connection
+HTTP
+CGI?
+Config parsing
+Async functionality
