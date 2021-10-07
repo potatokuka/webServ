@@ -1,0 +1,11 @@
+https://google.github.io/googletest/primer.html
+
+
+in project_root CMakeLists.txt:
+
+	add_subdirectory(module_name)
+
+write your .cpp and .hpp files in src/
+make corresponding .cpp test files as shown in tst/
+
+test using test.sh from project_root
