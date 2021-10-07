@@ -1,0 +1,33 @@
+         >>>>>>>        Http Notes         <<<<<<<
+
+
+Webserver is losted on a page, 127.0.0.1, and waits until something requests
+    a call for example. Every extension is looking at different ports
+    everything is forwarded default to PORT :80 -> http
+                                       PORT :443 -> https
+    one single computer can have multiple webservers running
+
+What is sending a web request? What does 
+
+Hyper
+Text
+Transfer
+Protocol
+
+- Application layer -
+
+    > http request example <
+
+    GET /orders/123 HTTP/1.1 <- 1st line START LINE
+    Host: 127.0.0.1:8000 <- every line until first linebreak is the HEADERS
+    User-Agent: Manual-Http-Request
+
+                    <- Body anything after line break
+
+GET <- request method
+/orders/123 <- request target
+HTTP/1.1 <- http verision
+
+Host <- ip and port that we are trying to send the request to
+User-Agent <- Header, what time of browser we are using
+
