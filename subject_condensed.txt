@@ -136,6 +136,11 @@ Keep things modular
 
 Socket connection
 HTTP
+	Request/Header parsing
+	Response
+System
+	File reading
+	File writing
 CGI?
 Config parsing
 Async functionality
