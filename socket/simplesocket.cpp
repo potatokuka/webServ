@@ -9,8 +9,8 @@ hde::SimpleSocket::SimpleSocket(int domain, int service, int protocol, int port,
     // establish socket
     int sock = socket(domain, service, protocol);
     test_connection(sock);
-    // establish network connection
-    connection = connect_to_network(sock, address);
+    // // establish network connection
+    // connection = connect_to_network(sock, address);
     test_connection(connection);
 }
 
@@ -35,4 +35,10 @@ int hde::SimpleSocket::get_sock() {
 
 int hde::SimpleSocket::get_connection() {
     return connection;
+}
+
+
+// Setters
+void hde::SimpleSocket::set_connection(int con) {
+    connection = con;
 }
