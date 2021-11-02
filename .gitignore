@@ -12,3 +12,5 @@ compile_commands.json
 *.a
 *.o
 *.test
+
+.DS_Store

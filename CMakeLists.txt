@@ -37,6 +37,7 @@ set(BINARY ${CMAKE_PROJECT_NAME})
 set(SOURCES main.cpp)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 
-add_subdirectory(example_module)
+add_subdirectory(ExampleModule)
+add_subdirectory(HTTPParse)
 
 add_executable(${BINARY}.run ${SOURCES})

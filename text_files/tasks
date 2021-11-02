@@ -1,0 +1,17 @@
+TODO:
+parse request path into object
+
+parse server configuration
+	check host:port is valid
+
+IN PROGRESS:
+parse HTTPRequests
+	Headers
+		GET
+		POST
+		DELETE
+	Bodies
+		POST
+		DELETE
+
+DONE:
