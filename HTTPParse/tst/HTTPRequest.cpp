@@ -6,7 +6,7 @@
 /*   By: dries <sanderlegit@gmail.com>                8!   .dWb.   !8         */
 /*                                                    Y8 .e* 8 *e. 8P         */
 /*   Created: 2021/10/07 14:02:17 by dries             *8*   8   *8*          */
-/*   Updated: 2021/11/02 14:21:03 by dries               **ee8ee**            */
+/*   Updated: 2021/11/03 13:11:53 by dries               **ee8ee**            */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,28 +62,37 @@ TEST_F(HTTPRequestTest, AssignedConstructor) {
 }
 
 TEST_F(HTTPRequestTest, ParsedGETRequest) {
-	std::string		s = "GET ";
+	std::string		s = "GET /\r\n\r\n";
 
 	_req = HTTPRequest(s);
 	EXPECT_EQ(_req.getRequest(), s);
 	EXPECT_EQ(_req.getMethod(), GET);
+	EXPECT_EQ(_req.getURI(), "/");
+}
+
+TEST_F(HTTPRequestTest, ParsedGETRequestInvalid1) {
+	std::string		s = "GET\n /\r\n\r\n";
+
+	_req = HTTPRequest(s);
+	EXPECT_EQ(_req.getRequest(), s);
+	EXPECT_EQ(_req.getMethod(), -1);
 	EXPECT_EQ(_req.getURI(), "");
 }
 
 TEST_F(HTTPRequestTest, ParsedPOSTRequest) {
-	std::string		s = "POST ";
+	std::string		s = "POST /\r\n\r\n";
 
 	_req = HTTPRequest(s);
 	EXPECT_EQ(_req.getRequest(), s);
 	EXPECT_EQ(_req.getMethod(), POST);
-	EXPECT_EQ(_req.getURI(), "");
+	EXPECT_EQ(_req.getURI(), "/");
 }
 
 TEST_F(HTTPRequestTest, ParsedDELETERequest) {
-	std::string		s = "DELETE ";
+	std::string		s = "DELETE /\r\n\r\n";
 
 	_req = HTTPRequest(s);
 	EXPECT_EQ(_req.getRequest(), s);
 	EXPECT_EQ(_req.getMethod(), DELETE);
-	EXPECT_EQ(_req.getURI(), "");
+	EXPECT_EQ(_req.getURI(), "/");
 }

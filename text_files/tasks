@@ -1,10 +1,14 @@
-TODO:
+----TODO:
+
 parse request path into object
 
 parse server configuration
 	check host:port is valid
 
-IN PROGRESS:
+binary tester with NGINX as comparison
+
+----IN PROGRESS:
+
 parse HTTPRequests
 	Headers
 		GET
@@ -14,4 +18,4 @@ parse HTTPRequests
 		POST
 		DELETE
 
-DONE:
+----DONE:

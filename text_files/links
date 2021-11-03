@@ -1,0 +1,30 @@
+Message body length
+https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.3
+
+Nginx config docs
+https://nginx.org/en/docs/beginners_guide.html
+
+latest RFC
+https://www.w3.org/Protocols/#rfc723x
+
+persistent connection
+https://datatracker.ietf.org/doc/html/rfc2616#section-8.1.2.1
+
+Minimum examples of HTTP requestso
+https://stackoverflow.com/questions/6686261/what-at-the-bare-minimum-is-required-for-an-http-request
+
+message length !OLD RFC
+https://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.4
+request URI !OLD RFC
+https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html
+
+HTTP Methods
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+
+HTTP Response
+https://www.ibm.com/docs/en/cics-ts/5.3?topic=protocol-http-responses
+HTTP Requests
+https://www.ibm.com/docs/en/cics-ts/5.3?topic=protocol-http-requests
+
+HTTP Response Codes
+https://www.w3schools.com/tags/ref_httpmessages.asp
