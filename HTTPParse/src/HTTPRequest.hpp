@@ -6,47 +6,16 @@
 /*   By: dries <sanderlegit@gmail.com>                8!   .dWb.   !8         */
 /*                                                    Y8 .e* 8 *e. 8P         */
 /*   Created: 2021/10/07 14:04:40 by dries             *8*   8   *8*          */
-/*   Updated: 2021/11/03 13:14:00 by dries               **ee8ee**            */
+/*   Updated: 2021/11/03 16:41:19 by dries               **ee8ee**            */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef HTTPREQUEST_HPP
+#define HTTPREQUEST_HPP
 #include <iostream>
 #include <string>
 #include <sstream>
-
-#define DEBUG		true
-#define print_debug(message, debug, w) {\
-	if (DEBUG) {\
-		std::stringstream 	buf; \
-		std::string			str; \
-		char				escs[2] = {'\r', '\n'}; \
-		std::string			litr[2] = {"\\r", "\\n"}; \
-		bool				flag; \
-		/*Assemble string to print */\
-		str = message; \
-		buf << str; \
-		for (int i = str.length(); i < w; i++) { \
-			buf << " "; \
-		} \
-		buf << "'" << debug << "'"; \
-		str = buf.str(); \
-		/*Print string */\
-		for (unsigned int i = 0; i < str.length(); i++) { \
-			/*Literal print escaped characters */\
-			flag = false; \
-			for (int c = 0; c < 2; c++) { \
-				if(str[i] == escs[c]) { \
-					std::cout << litr[c]; \
-					flag = true; \
-					break; \
-				} \
-			} \
-			/*Print non-escaped characters */\
-			if (!flag) \
-				std::cout << str[i]; \
-		} \
-		std::cout << std::endl;\
-	}}
+#include "Util.hpp"
 
 #define UNSET		-1
 #define GET			0
@@ -55,9 +24,9 @@
 
 class HTTPRequest {
 	public:
-		HTTPRequest() : _request(""), _method(-1), _URI("") {};
-		HTTPRequest(std::string request, int method, std::string URI) : _request(request), _method(method), _URI(URI) {};
-		HTTPRequest(std::string request) : _request(request), _method(-1), _URI("") {
+		HTTPRequest() : _request(""), _method(-1), _URI(""), _HTTP1_1(0) {};
+		HTTPRequest(std::string request, int method, std::string URI, int HTTP1_1) : _request(request), _method(method), _URI(URI), _HTTP1_1(HTTP1_1) {};
+		HTTPRequest(std::string request) : _request(request), _method(-1), _URI(""), _HTTP1_1(0) {
 			parseRequest(_request);
 		};
 		~HTTPRequest() {};
@@ -68,6 +37,8 @@ class HTTPRequest {
 			if (parseMethod(&request))
 				return 1;
 			if (parseURI(&request))
+				return 1;
+			if (parseHTTP1_1(&request))
 				return 1;
 			return 0;
 		}
@@ -97,7 +68,6 @@ class HTTPRequest {
 		//Find and identify method, removes from string
 		int				parseURI(std::string *request) {//TODO test this pls
 			unsigned long	pos;
-			std::string		rURI;
 			std::string		methods[] = {"GET", "POST", "DELETE"};
 
 			pos = request->find(" ");
@@ -113,6 +83,27 @@ class HTTPRequest {
 			return 0;
 		}
 
+		//Find and identify method, removes from string
+		int				parseHTTP1_1(std::string *request) {//TODO test this pls
+			unsigned long	pos;
+			std::string		rHTTP1_1;
+			std::string		methods[] = {"GET", "POST", "DELETE"};
+
+			pos = request->find(" ");
+			if (pos == -1ul)
+				pos = request->find("\r");
+			if (pos == -1ul)
+				return 1;
+			print_debug("pos", pos, 10); 
+			rHTTP1_1 = request->substr(0, pos);
+			if (rHTTP1_1.compare("HTTP/1.1") == 0)
+				_HTTP1_1 = 1;
+			*request = request->substr(pos + 1, request->length());
+			print_debug("rHTTP1_1", rHTTP1_1, 10); 
+			print_debug("HTTP1_1", _HTTP1_1, 10); 
+			print_debug("request", *request, 10);
+			return 0;
+		}
 
 		std::string		getRequest() { return _request; };
 		void			setRequest(std::string r) { _request = r; };
@@ -120,11 +111,14 @@ class HTTPRequest {
 		void			setMethod(int m) { _method = m; };
 		std::string		getURI() { return _URI; };
 		void			setURI(std::string u) { _URI = u; };
+		int				getHTTP1_1() { return _HTTP1_1; };
+		void			setHTTP1_1(int h) { _HTTP1_1 = h; };
 
 	protected:
 		std::string		_request;
 		int				_method;
 		std::string		_URI;
+		int				_HTTP1_1;
 };
 
 
@@ -143,3 +137,4 @@ class HTTPRequest {
 /* 		} */
 /* 	private: */
 /* }; */
+#endif

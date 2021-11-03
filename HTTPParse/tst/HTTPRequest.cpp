@@ -6,7 +6,7 @@
 /*   By: dries <sanderlegit@gmail.com>                8!   .dWb.   !8         */
 /*                                                    Y8 .e* 8 *e. 8P         */
 /*   Created: 2021/10/07 14:02:17 by dries             *8*   8   *8*          */
-/*   Updated: 2021/11/03 13:11:53 by dries               **ee8ee**            */
+/*   Updated: 2021/11/03 15:59:52 by dries               **ee8ee**            */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,27 @@ TEST_F(HTTPRequestTest, AssignedConstructor) {
 	std::string		s = "testing";
 	int				i = 27;
 	std::string		s2 = "testing123";
+	int				i2 = 1;
 
-	_req = HTTPRequest(s, i, s2);
+	_req = HTTPRequest(s, i, s2, i2);
 	EXPECT_EQ(_req.getRequest(), s);
 	EXPECT_EQ(_req.getMethod(), i);
 	EXPECT_EQ(_req.getURI(), s2);
+	EXPECT_EQ(_req.getHTTP1_1(), i2);
 }
 
 TEST_F(HTTPRequestTest, ParsedGETRequest) {
-	std::string		s = "GET /\r\n\r\n";
+	std::string		s = "GET / HTTP/1.1\r\n\r\n";
 
 	_req = HTTPRequest(s);
 	EXPECT_EQ(_req.getRequest(), s);
 	EXPECT_EQ(_req.getMethod(), GET);
 	EXPECT_EQ(_req.getURI(), "/");
+	EXPECT_EQ(_req.getHTTP1_1(), 1);
 }
 
 TEST_F(HTTPRequestTest, ParsedGETRequestInvalid1) {
-	std::string		s = "GET\n /\r\n\r\n";
+	std::string		s = "GET\n / HTTP/1.1\r\n\r\n";
 
 	_req = HTTPRequest(s);
 	EXPECT_EQ(_req.getRequest(), s);
@@ -79,8 +82,17 @@ TEST_F(HTTPRequestTest, ParsedGETRequestInvalid1) {
 	EXPECT_EQ(_req.getURI(), "");
 }
 
+TEST_F(HTTPRequestTest, ParsedGETRequestWhitespace) {
+	std::string		s = "GET       /             HTTP/1.1\r\n\r\n";
+
+	_req = HTTPRequest(s);
+	EXPECT_EQ(_req.getRequest(), s);
+	EXPECT_EQ(_req.getMethod(), 0);
+	EXPECT_EQ(_req.getURI(), "/");
+}
+
 TEST_F(HTTPRequestTest, ParsedPOSTRequest) {
-	std::string		s = "POST /\r\n\r\n";
+	std::string		s = "POST /login.php HTTP/1.1\r\n\r\n";
 
 	_req = HTTPRequest(s);
 	EXPECT_EQ(_req.getRequest(), s);
@@ -89,7 +101,7 @@ TEST_F(HTTPRequestTest, ParsedPOSTRequest) {
 }
 
 TEST_F(HTTPRequestTest, ParsedDELETERequest) {
-	std::string		s = "DELETE /\r\n\r\n";
+	std::string		s = "DELETE /mynudes.jpg HTTP/1.1\r\n\r\n";
 
 	_req = HTTPRequest(s);
 	EXPECT_EQ(_req.getRequest(), s);

@@ -4,10 +4,10 @@ set(SOURCES ${SOURCES})
 
 add_library(${MODULE_NAME}_lib STATIC ${SOURCES})
 
-# target_include_directories(${MODULE_NAME}_lib
-# 	PUBLIC //DIR HERE
-#     )
+target_include_directories(${MODULE_NAME}_lib
+	PUBLIC ../../Util/src/
+    )
 
-# target_link_libraries(${MODULE_NAME}_lib
-# 	PUBLIC //LIBHERE
-#   )
+target_link_libraries(${MODULE_NAME}_lib
+	PUBLIC util_lib
+  )

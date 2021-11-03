@@ -1,7 +1,6 @@
-set(MODULE_NAME HTTPParse)
+set(MODULE_NAME util)
 
 include_directories(src)
-include_directories(../Util/src/)
 
 file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true src/*.hpp src/*.cpp)
 
