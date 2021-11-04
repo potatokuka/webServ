@@ -7,15 +7,16 @@ parse server configuration
 
 binary tester with NGINX as comparison
 
+parse HTTPRequests
+	RequestLine /w ?queries
+	POST Bodies
+
 ----IN PROGRESS:
 
 parse HTTPRequests
 	Headers
-		GET
-		POST
-		DELETE
-	Bodies
-		POST
-		DELETE
 
 ----DONE:
+
+parse HTTPRequests
+	RequestLine /wo ?queries
