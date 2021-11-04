@@ -1,7 +1,16 @@
 
-CMakeCache.txt
+Testing/
 CMakeFiles/
+.cache/
 Makefile
+CMakeCache.txt
 cmake_install.cmake
-webserv.run
+CTestTestfile.cmake
+CTestCostData.txt
+compile_commands.json
+*.run
+*.a
+*.o
+*.test
+
 .DS_Store
