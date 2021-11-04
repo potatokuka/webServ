@@ -8,6 +8,9 @@
   | $$/   \  $$|  $$$$$$$| $$$$$$$/|  $$$$$$/|  $$$$$$$| $$         \  $/
   |__/     \__/ \_______/|_______/  \______/  \_______/|__/          \_/
 
+latest rfc
+https://www.w3.org/Protocols/#rfc723x
+
 -------------RFC (Request for Comments)
 	
 Initially informal note taking format for ARPANET, named RFC to create an open
@@ -21,6 +24,7 @@ FTP 		RFC959
 use get_rfc.sh [rfc_num] to download txt
 
 [rfc_num]:[line_no]
+
 
 https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa
 -------------OSI
@@ -74,6 +78,8 @@ HTTP/1.1 200 OK
 Content-Type: text/plain 
 Content-Length: 12 
 
+must end in \r\n
+
 ----!request methods (9 in total)
 
 GET		feth URL, retrieve remote data from the server
@@ -87,6 +93,54 @@ PUT		store to a URL
 DELETE	delete a URL (often just GET or POST)
 
 REST APIs:	GET, PUT, POST, DELETE
+
+We request GET, DELETE, POST
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+
+--GET
+
+http_URL = "http:" "//" host [ ":" port ] [ abs_path [ "?" query ]]
+      http://abc.com:80/~smith/home.html
+      http://ABC.com/%7Esmith/home.html
+      http://ABC.com:/%7esmith/home.html
+
+Examples:
+absoluteURI form
+       GET http://www.w3.org/pub/WWW/TheProject.html HTTP/1.1
+
+realtive path with host header field
+       GET /pub/WWW/TheProject.html HTTP/1.1
+       Host: www.w3.org
+
+https://stackoverflow.com/questions/6686261/what-at-the-bare-minimum-is-required-for-an-http-request
+
+An example of a request line is:
+GET /software/htp/cics/index.html HTTP/1.1
+
+In this example:
+the method is GET
+the path is /software/htp/cics/index.html
+the HTTP version is HTTP/1.1
+A request line might contain some additional items:
+A query string. This provides a string of information that the resource can use
+for some purpose. It follows the path, and is preceded by a question mark.  The
+scheme and host components of the URL, in addition to the path. When the
+resource location is specified in this way, it is known as the absolute URI
+form. For HTTP/1.1, this form is used when a request will go through a proxy
+server. Also for HTTP/1.1, if the host component of the URL is not included
+in the request line, it must be included in the message in a Host header.
+
+--POST
+
+Bodies
+
+HTTP request bodies are theoretically allowed for all methods except TRACE,
+however they are not commonly used except in PUT, POST and PATCH. Because of
+this, they may not be supported properly by some client frameworks, and you
+should not allow request bodies for GET, DELETE, TRACE, OPTIONS and HEAD
+methods.
+
+
 
 ----!request header fields
 
