@@ -1,22 +1,36 @@
 ----TODO:
 
-parse request path into object
+Socket connection
 
-parse server configuration
+HTTP
+	Request parsing
+		RequestLine /w ?queries
+		POST Bodies
+	Response
+
+Binary tester (NGINX)
+
+System
+	File reading
+	File writing
+
+CGI?
+
+Config parsing
 	check host:port is valid
 
-binary tester with NGINX as comparison
+Config implementation
 
-parse HTTPRequests
-	RequestLine /w ?queries
-	POST Bodies
+Async functionality
 
 ----IN PROGRESS:
 
-parse HTTPRequests
-	Headers
+HTTP
+	Request parsing
+		Headers
 
 ----DONE:
 
-parse HTTPRequests
-	RequestLine /wo ?queries
+HTTP
+	Request parsing
+		RequestLine /wo ?queries

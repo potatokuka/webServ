@@ -185,6 +185,11 @@ Content-types:
 		Application
 https://docs.microsoft.com/en-us/previous-versions/exchange-server/exchange-10/ms526508(v=exchg.10)?redirectedfrom=MSDN
 
+----!Header parsing approach
+
+parse header values into
+map<std::string, std::string>
+
 ----!payload messages 
 
 ----!metadata
