@@ -6,7 +6,7 @@
 /*   By: dries <sanderlegit@gmail.com>                8!   .dWb.   !8         */
 /*                                                    Y8 .e* 8 *e. 8P         */
 /*   Created: 2021/10/07 14:04:40 by dries             *8*   8   *8*          */
-/*   Updated: 2021/11/04 15:54:52 by dries               **ee8ee**            */
+/*   Updated: 2021/11/08 14:21:51 by dries               **ee8ee**            */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ class HTTPRequest {
 		//Find and identify method, removes from string
 		int				parseURI(std::string *request) {//TODO test this pls
 			unsigned long	pos;
-			std::string		methods[] = {"GET", "POST", "DELETE"};
 
 			*request = skip_whitespace(*request);
 			pos = request->find(" ");
